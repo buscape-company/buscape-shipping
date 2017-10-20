@@ -221,13 +221,30 @@ Estados processados por esta API:
     { 
        "orderId":"123", 
        "status":"invoiced", 
-       "invoice":{ 
+       "invoice":[{ 
+          "items":[   
+           {   
+               "sku":"SKU_PARCEIRO_1",
+               "quantity":2
+           }],
           "number":"b413bfe83d704c76bd4f81f99abf30c9", 
-          "value":100.90, 
+          "value":250.90, 
           "url":"https://buscape.slack.com/messages/D6X2MSFPE/", 
           "issuanceDate":"2017-09-09", 
           "key":"fe83d704c76bd4f" 
-       }
+       },
+       { 
+           "items":[   
+           {   
+               "sku":"SKU_PARCEIRO_2",
+               "quantity":1
+           }],
+          "number":"5f04b770edda4da6ad0f4723e186dd91", 
+          "value":100.90, 
+          "url":"https://buscape.slack.com/messages/GFGCDFXFD/", 
+          "issuanceDate":"2017-09-09", 
+          "key":"bb83456x46xbd4f" 
+       }]
     } 
     ```
     
@@ -236,6 +253,12 @@ Estados processados por esta API:
     { 
        "orderId":"123", 
        "status":"in_hosting", 
+       "items":[   
+           {   
+               "sku":"SKU_PARCEIRO_1",
+               "quantity":2
+           }],
+       "url":"http://www.correios.com.br/rastreio/BR625252S",
        "tracking":"BR625252S"
     } 
     ```
@@ -266,14 +289,28 @@ Estados processados por esta API:
 { 
    "orderId":"123", 
    "status":"invoiced", 
-   "invoice":{ 
-      "number":"b413bfe83d704c76bd4f81f99abf30c9", 
-      "value":100.90, 
-      "url":"https://buscape.slack.com/messages/D6X2MSFPE/", 
-      "issuanceDate":"2017-09-09", 
-      "key":"fe83d704c76bd4f" 
-   }, 
-   "tracking":"BR625252S" 
+   "invoice":[{ 
+        "items":[{   
+            "sku":"SKU_PARCEIRO_1",
+            "quantity":2
+        }],
+       "number":"b413bfe83d704c76bd4f81f99abf30c9", 
+       "value":250.90, 
+       "url":"https://buscape.slack.com/messages/D6X2MSFPE/", 
+       "issuanceDate":"2017-09-09", 
+       "key":"fe83d704c76bd4f" 
+    },
+    { 
+        "items":[{   
+            "sku":"SKU_PARCEIRO_2",
+            "quantity":1
+        }],
+       "number":"5f04b770edda4da6ad0f4723e186dd91", 
+       "value":100.90, 
+       "url":"https://buscape.slack.com/messages/GFGCDFXFD/", 
+       "issuanceDate":"2017-09-09", 
+       "key":"bb83456x46xbd4f" 
+    }]
 } 
 ```
 
@@ -282,12 +319,16 @@ Estados processados por esta API:
 | orderId | string | sim | Identificador do pedido no Buscapé |
 | status | string | sim | Estado de controle do pedido* |
 | invoice | object | sim/não | Dados da nota fiscal (Obrigatório caso o campo **status** for **invoiced**) |
+| invoice.items | array[object] | sim | Lista de itens da fatura |
+| invoice.items[].sku | string | sim | Sku contemplado na fatura |
+| invoice.items[].quantity | int | sim | Quantidade do item faturado |
 | invoice.number | string | sim | Número da nota fiscal |
 | invoice.value | float | sim | Valor total da nota fiscal |
 | invoice.url | string | não | Url da nota fiscal |
 | invoice.issuanceDate | string | não | Data de emissão da nota fical. Formato: YYYY-MM-DD |
 | invoice.key | string | não | Chave de acesso da nota fiscal |
-| tracking | string | não | Dado de rastreio caso o campo  **status** for **in_hosting** |
+| url | string | não | URL de rastreio caso o campo  **status** for **in_hosting** |
+| tracking | string | não | Código de rastreio caso o campo  **status** for **in_hosting** |
 
 \* Vide tabela de estados acima
 
