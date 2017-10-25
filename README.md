@@ -216,27 +216,46 @@ Estados processados por esta API:
 | 5 | Retentativa | retrying |
 | 6 | Completo | complete |
 
-1. **invoiced**: Antes de enviar o tracking, é obrigatório enviar a nota fiscal. Ex:
+1. **invoiced**: Antes de enviar o tracking, é obrigatório enviar a nota fiscal através da API de Pedidos.
+https://github.com/buscape-company/api-pedidos-v2
+Item 5 - Atualiza o tracking do pedido
+
     ```json
     { 
-       "orderId":"123", 
-       "status":"invoiced", 
-       "invoice":{ 
-          "number":"b413bfe83d704c76bd4f81f99abf30c9", 
-          "value":100.90, 
-          "url":"https://buscape.slack.com/messages/D6X2MSFPE/", 
-          "issuanceDate":"2017-09-09", 
-          "key":"fe83d704c76bd4f" 
-       }
-    } 
+     "trackingNumber":null,
+      "tracking":{ 
+           "description":null,
+           "occurredAt":null,
+           "controlPoint":"invoiced"
+      },
+      "carrier":null,
+      "invoice":{ 
+           "number": "b413bfe83d704c76bd4f81f99abf30c9", 
+           "value": "100,90",
+           "url": "https://buscape.slack.com/messages/D6X2MSFPE/", 
+           "issuanceDate":"2017-06-06",
+           "invoiceKey":"fe83d704c76bd4f"
+      },
+      "order_id":"123",
+      "seller_id":"112211"
+}
     ```
     
-2. **in_hosting**: Com o pedido na transportadora, atualiza o estado junto ao código de rastreio. Ex:
+2. **in_hosting**: Com o pedido na transportadora, atualiza o estado junto ao código de rastreio através da API de Pedidos.
+https://github.com/buscape-company/api-pedidos-v2
+Item 5 - Atualiza o tracking do pedido
+
     ```json
     { 
-       "orderId":"123", 
-       "status":"in_hosting", 
-       "tracking":"BR625252S"
+      "trackingNumber": "BR625252S",
+      "url":"http://www.correios.com.br/rastreio/BR625252S",
+      "tracking":{ 
+           "description":"Na Transportadora",
+           "occurredAt":"2017-06-07",
+           "controlPoint":"in_hosting"
+      },
+      "order_id":"123",
+      "seller_id":"112211"
     } 
     ```
     
@@ -265,29 +284,14 @@ Estados processados por esta API:
 ```json
 { 
    "orderId":"123", 
-   "status":"invoiced", 
-   "invoice":{ 
-      "number":"b413bfe83d704c76bd4f81f99abf30c9", 
-      "value":100.90, 
-      "url":"https://buscape.slack.com/messages/D6X2MSFPE/", 
-      "issuanceDate":"2017-09-09", 
-      "key":"fe83d704c76bd4f" 
-   }, 
-   "tracking":"BR625252S" 
-} 
+   "status":"in_route"
+}
 ```
 
 | Campo | Formato | Obrigatório | Descrição |
 |-------|---------|-------------|-----------|
 | orderId | string | sim | Identificador do pedido no Buscapé |
 | status | string | sim | Estado de controle do pedido* |
-| invoice | object | sim/não | Dados da nota fiscal (Obrigatório caso o campo **status** for **invoiced**) |
-| invoice.number | string | sim | Número da nota fiscal |
-| invoice.value | float | sim | Valor total da nota fiscal |
-| invoice.url | string | não | Url da nota fiscal |
-| invoice.issuanceDate | string | não | Data de emissão da nota fical. Formato: YYYY-MM-DD |
-| invoice.key | string | não | Chave de acesso da nota fiscal |
-| tracking | string | não | Dado de rastreio caso o campo  **status** for **in_hosting** |
 
 \* Vide tabela de estados acima
 
