@@ -197,7 +197,7 @@ Exemplo:
 
 ```text
 POST /api/tracking
-Host: {host_do_buscape}
+Host: shipping.buscape.com.br
 Content-Type: application/json; charset=utf-8
 Authorization: Token 3dbcf7bccc4c4aaaab45a9a05675e9eb
 Cache-Control: no-cache
@@ -217,47 +217,12 @@ Estados processados por esta API:
 | 6 | Completo | complete |
 
 1. **invoiced**: Antes de enviar o tracking, é obrigatório enviar a nota fiscal através da API de Pedidos.
-https://github.com/buscape-company/api-pedidos-v2
+https://github.com/buscape-company/api-pedidos-v2#52---campos-obrigat%C3%B3rios-na-atualiza%C3%A7%C3%A3o-de-tracking
 Item 5 - Atualiza o tracking do pedido
-
-    ```json
-    { 
-     "trackingNumber":null,
-      "tracking":{ 
-           "description":null,
-           "occurredAt":null,
-           "controlPoint":"invoiced"
-      },
-      "carrier":null,
-      "invoice":{ 
-           "number": "b413bfe83d704c76bd4f81f99abf30c9", 
-           "value": "100,90",
-           "url": "https://buscape.slack.com/messages/D6X2MSFPE/", 
-           "issuanceDate":"2017-06-06",
-           "invoiceKey":"fe83d704c76bd4f"
-      },
-      "order_id":"123",
-      "seller_id":"112211"
-}
-    ```
     
 2. **in_hosting**: Com o pedido na transportadora, atualiza o estado junto ao código de rastreio através da API de Pedidos.
-https://github.com/buscape-company/api-pedidos-v2
+https://github.com/buscape-company/api-pedidos-v2#52---campos-obrigat%C3%B3rios-na-atualiza%C3%A7%C3%A3o-de-tracking
 Item 5 - Atualiza o tracking do pedido
-
-    ```json
-    { 
-      "trackingNumber": "BR625252S",
-      "url":"http://www.correios.com.br/rastreio/BR625252S",
-      "tracking":{ 
-           "description":"Na Transportadora",
-           "occurredAt":"2017-06-07",
-           "controlPoint":"in_hosting"
-      },
-      "order_id":"123",
-      "seller_id":"112211"
-    } 
-    ```
     
 3. **in_route**, **reversal** e **retrying**: São estados de atualização das informações para o cliente, para que o mesmo possa saber como está o processo de entrega do seu pedido. Ex:
     ```json
